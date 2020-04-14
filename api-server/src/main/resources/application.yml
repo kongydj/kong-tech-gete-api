@@ -1,0 +1,127 @@
+server:
+  port: 8081
+  debug: true
+  jackson:
+    deserialization:
+      read-date-timestamps-as-nanoseconds: false
+      fail-on-unknown-properties: false
+      fail-on-ignored-properties: false
+    serialization:
+      fail-on-empty-beans: false
+  datasource:
+    hikari:
+      maximum-pool-size: 50
+      minimum-idle: 50
+  jpa:
+    show-sql: false
+    properties:
+      hibernate:
+        default_batch_fetch_size: 30
+        jdbc.batch_size: 30
+        jdbc.order_inserts: true
+        jdbc.order_updates: true
+        generate_statistics: false
+        connection.autocommit: false
+        format_sql: false
+    database: MYSQL
+    hibernate:
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+      ddl-auto: update #DB 직접제어 못하게 막기
+
+  session:
+    store-type: none # 세션 사용하지 않음
+  profiles:
+    active: local
+  logging:
+    level:
+      org.springframework.security: INFO
+  management:
+    security:
+      enabled: false
+    server:
+      port: 8083
+    endpoints:
+      web:
+        exposure:
+          include: "*"
+  jwt:
+    secret: dyAeHubOOc8KaOfYB6XEQoEj1QzRlVgtjNL8PYs1A1tymZvvqkcEU7L1imkKHeDa
+    #issuer: dev-kcapi.kong-tech.com/auth
+    issuer: kcapi.kong-tech.com/auth
+
+#spring.h2.console:
+#  enabled: true
+#  path: /h2-console
+
+# 외부 DB 설정시 아래의 주석을 활성화 시킨 후 관련 DB 설정 정보를 입력한다.
+#spring:
+#  datasource:
+#    url: jdbc:h2:tcp://localhost/~/api;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+#    driverClassName: org.h2.Driver
+#    username: sa
+#    password:
+
+spring:
+#  profiles: production
+  output:
+    ansi:
+      enabled: NEVER #로그 칼라풀 하게 찍기
+  datasource:
+    url: jdbc:mysql://kong-check.cnkmslg0q6y3.ap-northeast-2.rds.amazonaws.com:3306/kong-check-oauth?autoReconnect=true&useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Seoul&zeroDateTimeBehavior=convertToNull&rewriteBatchedStatements=true
+    driverClassName: com.mysql.cj.jdbc.Driver
+    username: kongtech
+    password: kongtech892!
+  jpa:
+    show-sql: false
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        format_sql: false
+
+#spring:
+#  output:
+#    ansi:
+#      enabled: ALWAYS #로그 칼라풀 하게 찍기
+#  datasource:
+#    url: jdbc:mysql://kong-check.cnkmslg0q6y3.ap-northeast-2.rds.amazonaws.com:3306/kong-check-account?autoReconnect=true&useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Seoul&zeroDateTimeBehavior=convertToNull&rewriteBatchedStatements=true
+#    username: kongtech
+#    password: kongtech892!
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+
+#logging:
+#  file: ./logs/application.log
+#  level:
+#    com.squareup.okhttp3: DEBUG
+#    org.hibernate.type.descriptor.sql.BasicBinder: OFF
+#    org.hibernate.SQL: OFF
+#    org.springframework.web.filter.CommonsRequestLoggingFilter: DEBUG
+#    com.kongtech.check.api: DEBUG
+#
+#management:
+#  endpoint:
+#    health:
+#      show-details: ALWAYS
+
+
+#security:
+#  oauth2:
+#    client:
+#      client-id: foo
+#      client-secret: bar
+#    resource:
+#      token-info-uri: http://localhost:8080/oauth/check_token
+
+security:
+  oauth2:
+    client:
+      client-id: myApp
+      client-secret: secret
+    resource:
+      token-info-uri: http://192.168.0.59:8081/check_token
+
+logging.level:
+  org.springframework:
+    security: debug
+    boot: debug

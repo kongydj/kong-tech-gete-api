@@ -1,0 +1,11 @@
+include::exam1.adoc[]
+
+include::exam2.adoc[]
+
+include::exam3.adoc[]
+
+include::exam4.adoc[]
+
+include::exam5.adoc[]
+
+include::exam6.adoc[]
